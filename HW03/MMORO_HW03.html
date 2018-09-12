@@ -333,7 +333,7 @@ message('the 22nd data set is ',item)</code></pre>
 <h2>4c</h2>
 <p>Use a more detailed list of the data sets to write out the URL in a comment to the related news story</p>
 <pre class="r"><code>#vignette(&quot;fivethirtyeight&quot;, package = &quot;fivethirtyeight&quot;)
-df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/'</code></pre>
+#df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/' ?should I add to the data frame?</code></pre>
 <p><strong>Related news Story is here:</strong> <a href="http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/" class="uri">http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/</a></p>
 </div>
 <div id="d" class="section level2">
@@ -341,10 +341,10 @@ df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-
 <p>Using R command(s), give the dimensions and column names of this data frame.</p>
 <p>Dimension of the data frame:</p>
 <pre class="r"><code>message(dim(df)[1], ' Rows, ', dim(df)[2],' Columns')</code></pre>
-<pre><code>## 173 Rows, 22 Columns</code></pre>
+<pre><code>## 173 Rows, 21 Columns</code></pre>
 <p>Column Names of the data frame:</p>
 <pre class="r"><code>message(paste0(names(df),collapse=', '))</code></pre>
-<pre><code>## rank, major_code, major, major_category, total, sample_size, men, women, sharewomen, employed, employed_fulltime, employed_parttime, employed_fulltime_yearround, unemployed, unemployment_rate, p25th, median, p75th, college_jobs, non_college_jobs, low_wage_jobs, comment</code></pre>
+<pre><code>## rank, major_code, major, major_category, total, sample_size, men, women, sharewomen, employed, employed_fulltime, employed_parttime, employed_fulltime_yearround, unemployed, unemployment_rate, p25th, median, p75th, college_jobs, non_college_jobs, low_wage_jobs</code></pre>
 </div>
 </div>
 <div id="question-5" class="section level1">
@@ -364,11 +364,11 @@ df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-
 ## [15] &quot;unemployment_rate&quot;           &quot;p25th&quot;                      
 ## [17] &quot;median&quot;                      &quot;p75th&quot;                      
 ## [19] &quot;college_jobs&quot;                &quot;non_college_jobs&quot;           
-## [21] &quot;low_wage_jobs&quot;               &quot;comment&quot;</code></pre>
+## [21] &quot;low_wage_jobs&quot;</code></pre>
 <pre class="r"><code>length(names(df))</code></pre>
-<pre><code>## [1] 22</code></pre>
+<pre><code>## [1] 21</code></pre>
 <pre class="r"><code>ncol(df)</code></pre>
-<pre><code>## [1] 22</code></pre>
+<pre><code>## [1] 21</code></pre>
 </div>
 <div id="b-2" class="section level2">
 <h2>5b</h2>
@@ -378,8 +378,8 @@ df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-
   summarize(count=n())
 
 DT::datatable(major_count)</code></pre>
-<div id="htmlwidget-33f799e66e250f10f3e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-33f799e66e250f10f3e1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],["Agriculture &amp; Natural Resources","Arts","Biology &amp; Life Science","Business","Communications &amp; Journalism","Computers &amp; Mathematics","Education","Engineering","Health","Humanities &amp; Liberal Arts","Industrial Arts &amp; Consumer Services","Interdisciplinary","Law &amp; Public Policy","Physical Sciences","Psychology &amp; Social Work","Social Science"],[10,8,14,13,4,11,16,29,12,15,7,1,5,10,9,9]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>major_category<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bf46c2cc9f6df1cdf8c5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf46c2cc9f6df1cdf8c5">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],["Agriculture &amp; Natural Resources","Arts","Biology &amp; Life Science","Business","Communications &amp; Journalism","Computers &amp; Mathematics","Education","Engineering","Health","Humanities &amp; Liberal Arts","Industrial Arts &amp; Consumer Services","Interdisciplinary","Law &amp; Public Policy","Physical Sciences","Psychology &amp; Social Work","Social Science"],[10,8,14,13,4,11,16,29,12,15,7,1,5,10,9,9]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>major_category<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="c-2" class="section level2">
 <h2>5c</h2>

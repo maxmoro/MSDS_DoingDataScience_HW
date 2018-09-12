@@ -139,7 +139,7 @@ Use a more detailed list of the data sets to write out the URL in a comment to t
 
 ```{r}
 #vignette("fivethirtyeight", package = "fivethirtyeight")
-df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/'
+#df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/' ?should I add to the data frame?
 
 ```
 
