@@ -7,13 +7,13 @@ Topics Included
 
 -   folder HW01; Basic R - Vector opertions, randome nubmers, math..
 
--   folder HW02: Air Polluation Data, Cars Data,
+-   folder HW02: Air Pollution Data, Cars Data,
 
 -   folder HW03: Datasets manipulation (credits to FiveThirthyEight,Ceasar0301, and Dale Barr)
 
 For any question, please contact (<massimiliano.moro@gmail.com>)
 
-Source of material used in this projct:
+Source of material used in this project:
 
 -   FiveThirthyEight data sources: <https://github.com/rudeboybert/fivethirtyeight>
 
