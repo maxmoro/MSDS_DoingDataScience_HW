@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **GitHub Cloning (20 points):** Using Git, clone the following GitHub repository to your local machine: https://github.com/caesar0301/awesome-public-datasets. In RMarkdown, please show the code (commented out, as it’s not R syntax) that you used to create a new directory, navigate to the appropriate directory, and clone the repository to it. One Git command per line, please.
 
 ```{bash engine.path="C:/Program Files/Git/git-bash.exe"}
-#Markdown can now manage also other sources, like gitBash!
+#Markdown can now manage also other languages and command-lines, like gitBash!
  mkdir datasets
  cd datasets
  git clone https://github.com/caesar0301/awesome-public-datasets
