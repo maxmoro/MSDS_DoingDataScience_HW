@@ -384,7 +384,10 @@ barplot(major_count$count,names.arg=major_count$major_category
 <div id="d-1" class="section level2">
 <h2>5d</h2>
 <p>Write the fivethirtyeight data to a csv file. Make sure that it does not have row labels.</p>
-<pre class="r"><code>write.csv(df,row.names = F,file=paste0(item,'.csv'))</code></pre>
+<pre class="r"><code>file=paste0(item,'.csv')
+write.csv(df,row.names = F,file=file)
+message('saved as: ',file)</code></pre>
+<pre><code>## saved as: college_recent_grads.csv</code></pre>
 </div>
 </div>
 <div id="question-6" class="section level1">
@@ -394,6 +397,10 @@ barplot(major_count$count,names.arg=major_count$major_category
 <h2>6a</h2>
 <p>Start a new repository on GitHub for your SMU MSDS homework. On your local device, make sure there is a directory for Homework at the minimum; you are welcome to add whatever you would like to this repo in addition to your requirements here.</p>
 <p><strong>The repo is here:</strong> <a href="https://github.com/maxmoro/MSDS_DoingDataScience_HW" class="uri">https://github.com/maxmoro/MSDS_DoingDataScience_HW</a></p>
+</div>
+<div id="b-3" class="section level2">
+<h2>6b</h2>
+<p>Create a README.md file which explains the purpose of the repository, the topics included, the sources for the material you post, and contact information in case of questions. Remember, the one in the root directory should be general. You are welcome to make short READMEs for each assignment individually in other folders.</p>
 </div>
 </div>
 

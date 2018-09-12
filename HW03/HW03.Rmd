@@ -204,7 +204,9 @@ barplot(major_count$count,names.arg=major_count$major_category
 Write the fivethirtyeight data to a csv file. Make sure that it does not have row labels.
 
 ```{r}
-write.csv(df,row.names = F,file=paste0('HW03\',item,'.csv'))
+file=paste0(item,'.csv')
+write.csv(df,row.names = F,file=file)
+message('saved as: ',file)
 ```
 
 
