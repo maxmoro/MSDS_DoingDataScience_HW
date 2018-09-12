@@ -3,9 +3,17 @@ Readme
 
 This repository contains the homework made by Max Moro for the Doing Data Science class for the Master in Data Science program at Southern Methodist Universitu (MSU)
 
+Topics Included
+
+-   folder HW01; Basic R - Vector opertions, randome nubmers, math..
+
+-   folder HW02: Air Polluation Data, Cars Data,
+
+-   folder HW03: Datasets manipulation (credits to FiveThirthyEight,Ceasar0301, and Dale Barr)
+
 For any question, please contact (<massimiliano.moro@gmail.com>)
 
-Source of material usind in this projct:
+Source of material used in this projct:
 
 -   FiveThirthyEight data sources: <https://github.com/rudeboybert/fivethirtyeight>
 

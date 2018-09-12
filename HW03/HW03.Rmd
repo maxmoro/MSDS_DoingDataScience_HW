@@ -143,6 +143,8 @@ df$comment = 'http://fivethirtyeight.com/features/the-economic-guide-to-picking-
 
 ```
 
+**Related news Story is here:** http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+
 
 ## 4d
 
@@ -182,6 +184,8 @@ Generate a count of each unique major_category in the data frame. I recommend us
 major_count = df %>% 
   group_by(major_category) %>%
   summarize(count=n())
+
+DT::datatable(major_count)
 ```
 
 ## 5c
@@ -223,3 +227,19 @@ Start a new repository on GitHub for your SMU MSDS homework. On your local devic
 ## 6b
 
 Create a README.md file which explains the purpose of the repository, the topics included, the sources for the material you post, and contact information in case of questions. Remember, the one in the root directory should be general. You are welcome to make short READMEs for each assignment individually in other folders.
+
+**the READMe.md is saved in the main folder:** https://github.com/maxmoro/MSDS_DoingDataScience_HW/blob/master/readme.md
+
+## 6c
+
+In one (or more) of the nested directories, post your RMarkdown script, HTML file, and data from ‘fivethirtyeight.’ Make sure that in your README or elsewhere that you credit fivethirtyeight in some way.
+
+**the files are available in the HW03 folder:** https://github.com/maxmoro/MSDS_DoingDataScience_HW/tree/master/HW03
+
+## 6d
+
+In your RMarkdown script, please provide the link to this GitHub so the grader can see it.
+
+**Link to the GitHub:** https://github.com/maxmoro/MSDS_DoingDataScience_HW
+
+
