@@ -165,7 +165,7 @@ message(paste0(names(df),collapse=', '))
 **Data Summary (30 points):** Use your newly assigned data frame from question 4 for this question.
 
 ## 5a
-
+ 
 Write an R command that gives you the column names of the data frame. Right after that, write one that counts the number of columns but not rows. Hint: The number should match one of your numbers in Question 1d for dimensions.
 
 ```{r}
