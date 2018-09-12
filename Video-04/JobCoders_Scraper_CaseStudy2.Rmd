@@ -1,0 +1,228 @@
+---
+title: "CaseStudy2"
+author: "Monnie McGee"
+date: "October 8, 2015"
+output: 
+  html_document:
+    keep_md: true
+---
+## Case Study II: Using Data Science to Define Data Science
+## Due Date: November 5, 2015
+
+The purpose of this case study is to use R to explore different on-line job postings for different positions in ''data science''. The assumption is that we can use the job descriptions that employers post for data scientists to define what a data scientist does (and thereby arrive at a definition of data science as a discipline).
+
+### Deliverable
+In using data science to define data science, we need to keep in mind reproducibility. To this end, your project markdown code should be committed and pushed to GitHub. The deliverable is a link to the GitHub repository where the markdown code resides. 
+
+### Grading (Total of 50 points)
+Your grade will be based on the following:
+
+* Reproducibility: 5 = I only needed to change the working directory to 1 = I had to copy and paste every single line into R. Ideally, I should be able to import the markdown file into RStudio, push "Knit HTML" and get your source code and output - assuming that the job descriptions you chose are still there!
+
+* Orangization, Grammar and spelling: 5 = no discernable mistakes to 0 = please proofread. Your professor double-majored in English and mathematics for her bachelor's degree. Grammar and spelling always count. Furthermore, with modern spell-checkers, there is NO EXCUSE for misspelled words!
+
+* Content (duh). Content includes the following:
+  1. Introduction to the project (5 points)
+  2. At least two different job sites searched (5 points)
+  3. Correct job postings located and scraped, and a discussion of how postings were selected from the website. There should be at least 10 job postings searched per website. (5 points)
+  4. Informative visualization for display of results (10 points)
+  5. Conclusion (5 points)
+
+* Important Note: You must check the terms of use to make sure that 'scraping' or 'harvesting' is allowed on the websites that you choose. Not all job websites allow harvesting of data.
+
+* Appendix of lessons learned (10 points): Did you make any mistakes along the way? Please give examples of the mistake and show how you corrected it. I will compile these "lessons learned" so that everyone can benefit. Put these in a separate plain text document (with comments). In other words - teach your professor something about R, displaying results, or web scraping. We learn best when we teach.
+
+### The Code
+ We will make a separate function for each step, which should make the functions easier to read, test, maintain, and adjust as the format of the web pages changes. The function `cy.getFreeFormWords()` below fetches the lists of free-form text in the HTML document. The function then decomposes the text into the words in each element, using spaces and punctuation characters to separate them. This is done by calling the `asWords()` function. One of the arguements for `asWords()` is a list of "stop words", which are small words that are present in a large number of English sentences. We don't want to include these words in our list of post words. Finally, a call to `removeStopWords()` removes all stop words from the post, so that we have only the words that carry meaning for the job seeker (well, almost).
+
+```{r Load libraries}
+library(XML)
+library(RCurl)
+```
+
+```{r getFreeForm}
+StopWords = readLines("http://jmlr.csail.mit.edu/papers/volume5/lewis04a/a11-smart-stop-list/english.stop")
+
+asWords = function(txt, stopWords = StopWords, stem = FALSE)
+{
+  words = unlist(strsplit(txt, '[[:space:]!.,;#:()/"]+'))
+  words = words[words != ""]
+  if(stem && require(Rlibstemmer))
+     words = wordStem(words)
+  i = tolower(words) %in% tolower(stopWords)
+  words[!i]
+}
+
+removeStopWords = function(x, stopWords = StopWords) 
+     {
+         if(is.character(x))
+             setdiff(x, stopWords)
+         else if(is.list(x))
+             lapply(x, removeStopWords, stopWords)
+         else
+             x
+     }
+
+cy.getFreeFormWords = function(doc, stopWords = StopWords)
+     {
+         nodes = getNodeSet(doc, "//div[@class='job-details']/
+                                 div[@data-section]")
+         if(length(nodes) == 0) 
+             nodes = getNodeSet(doc, "//div[@class='job-details']//p")
+         
+         if(length(nodes) == 0) 
+             warning("did not find any nodes for the free form text in ",
+                     docName(doc))
+         
+         words = lapply(nodes,
+                        function(x)
+                            strsplit(xmlValue(x), 
+                                     "[[:space:][:punct:]]+"))
+         
+         removeStopWords(words, stopWords)
+     }
+
+```
+
+### Question 1: Implement the following functions. Use the code we explored to extract the date posted, skill sets and salary and location information from the parsed HTML document.
+
+```{r Question1}
+cy.getSkillList = function(doc)
+{
+  lis = getNodeSet(doc, "//div[@class = 'skills-section']//
+                         li[@class = 'skill-item']//
+                         span[@class = 'skill-name']")
+
+  sapply(lis, xmlValue)
+}
+
+cy.getDatePosted = function(doc)
+  { xmlValue(getNodeSet(doc, 
+                     "//div[@class = 'job-details']//
+                        div[@class='posted']/
+                        span/following-sibling::text()")[[1]],
+    trim = TRUE) 
+}
+
+cy.getLocationSalary = function(doc)
+{
+  ans = xpathSApply(doc, "//div[@class = 'job-info-main'][1]/div", xmlValue)
+  names(ans) = c("location", "salary")
+  ans
+}
+
+# cy.getSkillList(cydoc)
+# cy.getLocationSalary(cydoc)
+```
+
+The function `cy.ReadPost()` given below reads each job post. This function implements three other functions: `cy.getFreeFormWords()`, `cy.getSkillList()`, and `cy.getLocationSalary()`.
+
+```{r cy.readPost}
+cy.readPost = function(u, stopWords = StopWords, doc = htmlParse(u))
+  {
+    ans = list(words = cy.getFreeFormWords(doc, stopWords),
+         datePosted = cy.getDatePosted(doc),
+         skills = cy.getSkillList(doc))
+    o = cy.getLocationSalary(doc)
+    ans[names(o)] = o
+    ans
+}
+# cyFuns = list(readPost = function(u, stopWords = StopWords, doc=htmlParse(u)))
+```
+### Reading posts programmatically
+The function `cy.ReadPost()` allows us to read a single post from CyberCoders.com in a very general format. All we need is the URL for the post. Now, let's see about obtaining the URLs using a computer program.
+
+```{r GetPosts}
+# Obtain URLs for job posts
+txt = getForm("http://www.cybercoders.com/search/", searchterms = '"Data Scientist"',
+              searchlocation = "",  newsearch = "true", sorttype = "")
+# Parse the links
+doc = htmlParse(txt, asText = TRUE)
+links = getNodeSet(doc, "//div[@class = 'job-title']/a/@href")
+# Save the links in the vector joblinks
+joblinks <- getRelativeURL(as.character(links), "http://www.cybercoders.com/search/")
+# Read the posts
+# posts <- lapply(joblinks,cy.readPost)
+
+cy.getPostLinks = function(doc, baseURL = "http://www.cybercoders.com/search/") 
+  {
+    if(is.character(doc)) doc = htmlParse(doc)
+    links = getNodeSet(doc, "//div[@class = 'job-title']/a/@href") 
+    getRelativeURL(as.character(links), baseURL)
+}
+
+cy.readPagePosts = function(doc, links = cy.getPostLinks(doc, baseURL),
+baseURL = "http://www.cybercoders.com/search/")
+  {
+    if(is.character(doc)) doc = htmlParse(doc)
+    lapply(links, cy.readPost)
+ }
+
+## Testing the function with the parsed version of the first page of results in object doc
+posts = cy.readPagePosts(doc)
+sapply(posts,`[[`, "salary")
+summary(sapply(posts, function(x) length(unlist(x$words))))
+```
+
+**Question:** Test the `cy.getFreeFromWords()` function on several different posts.
+
+The following code chunk pulls it all together. The function `cy.getNextPageLink()` retrieves each page from CyberCoders and calls the other functions to parse each post in order to obtain information such as salary, skills, and location.
+
+```{r Next Page of Results}
+# Test of concept
+# getNodeSet(doc, "//a[@rel='next']/@href")[[1]]
+## A function to get all pages
+cy.getNextPageLink = function(doc, baseURL = docName(doc))
+{
+  if(is.na(baseURL))
+     baseURL = "http://www.cybercoders.com/"
+  link = getNodeSet(doc, "//li[@class = 'lnk-next pager-item ']/a/@href")
+  if(length(link) == 0)
+    return(character())
+    link2 <- gsub("./", "search/",link[[1]])
+ getRelativeURL(link2, baseURL)
+}
+
+# Test the above function
+# tmp = cy.getNextPageLink(doc, "http://www.cybercoders.com")
+```
+
+Now we have all we need to retrieve all job posts on Cyber Coders for a given search query. The following function puts it all together into a function that we can call with a search string for a job of interest. The function submits the initial query and then reads the posts from each result page.
+```{r cyberCoders}
+cyberCoders =
+function(query)
+{
+   txt = getForm("http://www.cybercoders.com/search/",
+                  searchterms = query,  searchlocation = "",
+                  newsearch = "true",  sorttype = "")
+   doc = htmlParse(txt)
+
+   posts = list()
+   while(TRUE) {
+       posts = c(posts, cy.readPagePosts(doc))
+       nextPage = cy.getNextPageLink(doc)
+       if(length(nextPage) == 0)
+          break
+
+       nextPage = getURLContent(nextPage)
+       doc = htmlParse(nextPage, asText = TRUE)
+   }
+   invisible(posts)
+}
+```
+
+The function cyberCoders is called below with the skill "Data Scientist". Then, we sort the skills and obtain all skills that are mentioned more than twice in the list.
+
+```{r Get Skills, cache=TRUE}
+dataSciPosts = cyberCoders("Data Scientist")
+tt = sort(table(unlist(lapply(dataSciPosts, `[[`, "skills"))),
+           decreasing = TRUE)
+tt[tt >= 2]
+```
+
+Your first job from here is to clean up the skills list using regular expressions. You should explain which categories you combined and justify your decisions for combining categories in the R Markdown document. For help, see `help(regex)` and slides from class meetings 12 and 13 on BB.
+
+Once you have your files cleaned up, your second assignment is to create visualizations of the skils required, and interpret those visualizations.
+
+Reference:
+Code taken from Nolan, D. and Temple Lang. Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving. CRC Press, 04/2015. VitalBook file.
