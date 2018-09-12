@@ -210,9 +210,11 @@ write.csv(df,row.names = F,file=paste0(item,'.csv'))
 
 #Question 6
 
-##6. Codebook (30 points):##
+**6. Codebook (30 points):**
 
-# 6a
+## 6a
 
 Start a new repository on GitHub for your SMU MSDS homework. On your local device, make sure there is a directory for Homework at the minimum; you are welcome to add whatever you would like to this repo in addition to your requirements here.
+
+**The repo is here:** https://github.com/maxmoro/MSDS_DoingDataScience_HW
 
