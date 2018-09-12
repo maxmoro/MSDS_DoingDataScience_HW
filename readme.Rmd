@@ -9,11 +9,11 @@ output:
 
 # Readme
 
-This repository contains the homework made by Max Moro for the Doing Data Science class for the  Master in Data Science program at Southern Methodist Universitu (MSU)
+This repository contains the homework made by Max Moro for the Doing Data Science class for the  Master in Data Science program at Southern Methodist University (MSU)
 
 Topics Included
 
-- folder HW01; Basic R - Vector opertions, randome nubmers, math..
+- folder HW01; Basic R - Vector operations, random numbers, math..
 
 - folder HW02: Air Pollution Data, Cars Data,
 
