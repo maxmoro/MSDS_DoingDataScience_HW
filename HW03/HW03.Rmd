@@ -204,7 +204,7 @@ barplot(major_count$count,names.arg=major_count$major_category
 Write the fivethirtyeight data to a csv file. Make sure that it does not have row labels.
 
 ```{r}
-write.csv(df,row.names = F,file=paste0(item,'.csv'))
+write.csv(df,row.names = F,file=paste0('HW03\',item,'.csv'))
 ```
 
 
@@ -218,3 +218,6 @@ Start a new repository on GitHub for your SMU MSDS homework. On your local devic
 
 **The repo is here:** https://github.com/maxmoro/MSDS_DoingDataScience_HW
 
+## 6b
+
+Create a README.md file which explains the purpose of the repository, the topics included, the sources for the material you post, and contact information in case of questions. Remember, the one in the root directory should be general. You are welcome to make short READMEs for each assignment individually in other folders.
