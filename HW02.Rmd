@@ -1,0 +1,136 @@
+---
+title: "HW2"
+author: "Max Moro"
+date: "September 4, 2018"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1 
+
+(20 points) Put the following questions into RMarkdown as headers (or subheaders
+if you’re making question numbers headings). Be sure to answer the questions
+underneath each header
+
+## What is a basic workflow for reproducible research?
+
+The stages of reproducible research should include:
+
+- Data gathering
+- Data analysis
+- Results presentation
+
+## What are five practical tips for making research reproducible?
+
+The five tips for making research reproducible are:
+
+-  Document everything.
+-  Everything is a text file.
+-  All files should be human readable.
+-  Explicitly tie your files together.
+-  Have a plan to organize, store, and make your files available.
+
+## Give an example of how you might implement each tip.
+
+Here examples of how I would implement each tip
+
+### Document Everything
+
+I Usually write down a document, often in Markdown and SQL as comments, tracking all the steps I did to  gather, transform, analyze, and display the data. When I create many versions of the same file, I use GitHub comments to track what I've done.
+
+### Everything is a text file.
+
+I use markdown, SQL files, and notes in TXT format to track what I'm doing. I'm avoiding proprietary formats like DOC or One Note to avoid issues on reading these data.
+
+### All files should be human readable.
+
+The code and markdown files, have an introduction paragraph that explain what is the file about, what is the objective, and the approach used.
+
+### Have a plan to organize, store, and make your files available.
+
+I normally use **GitHub** and **Jira** to organize my projects. With Jira I take note of the objective of the project, the different tasks and deliverables. With GitHub I can track the different changes I did. If need to re-work an old project, I *branch* the project so I can document what I'm doing for future reference.
+
+A good practice is to create *source files* and *R-packages*  that perform specific tasks, so I and others can reuse for other projects. The source code is also more readable when is broken in its major elements.
+
+### Which one of these do you think will be the most difficult?
+
+I think the most challenging is documenting the code in a way that my future-self or others can easily understand what the code is doing. I often assume the code is obvious, but without the knowledge of the specific project, is often very difficult to interpret the code.
+
+# Question 2
+
+(20 points) Download and complete “air_hist.R” code from the Files Tab on 2DS. You
+will build scatter plots using the plot function.
+
+## TODO - 2a
+
+As described in the “TODO Assignment 2: Question 2a” comment, complete the plot function regarding monthly temperature.
+
+```{r 2a}
+# Take only Temp columns
+Temperature <- airquality$Temp
+# TODO: Assignment 2, Q2A: Complete the following code to yield a scatterplot with x as Month and y as Temp
+# You're going to customize your plot slightly.  Use the help function to assist you if needed.
+# Make the x label "Month" and the y label "Temperature"
+# Finally, make the title of the plot "Temperature by Month" 
+plot(x=airquality$Month, y=Temperature, xlab='Month',ylab='Temperatore',main="Temperature by Month" )
+```
+
+## TODO - 2b
+
+As described in the “TODO Assignment 2: Question 2b” comment, complete the plot function involving ozone.
+
+```{r 2b}
+# TODO: Assignment 2, Q2B: Build a scatter plot with x as Temperature and y as Ozone 
+# Complete the following code:
+# Make the x label "Temperature" and the y label "Ozone",
+# Make the title of the plot "Temperature vs Ozone"
+plot(x=airquality$Temp, y=airquality$Month,xlab='Temperature',ylab='Ozone',main="Temperature vs Ozone")
+
+```
+
+## Translate
+
+Translate these to RMarkdown and put them in your overall homework RMarkdown file.
+
+**Done !**
+
+
+#  Question 3
+
+(20 points) Download and complete “knit_cars.Rmd” in the Files tab on 2DS.
+
+```{r pressure_data}
+summary(pressure)
+```
+
+## TODO - 3A
+You can also embed plots as default, for example:
+
+TODO: Assignment 2: 3A, complete the following scatter plot. The x axis is pressure, while the y axis is temperature
+Please title the graph "Temperature vs Pressure"
+
+```{r pressure_plot, echo=FALSE}
+plot(x=pressure$pressure,y=pressure$temperature,main="Temperature vs Pressure")
+```
+
+## TODO - 3B
+
+Now flip it!
+
+TODO: Assignment 2: 3B, complete the following scatter plot: x axis is pressure, y axis is temperature, Label the x axis as "Temperature" and the y axis as "Pressure", Title the graph as "Pressure vs Temperature"
+
+
+```{r pressure_plot2, echo=FALSE}
+plot(y=pressure$pressure,x=pressure$temperature,ylab="Pressure",xlab="Temperature",main= "Pressure vs Temperature")
+```
+
+
+

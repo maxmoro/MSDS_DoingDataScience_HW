@@ -1,0 +1,146 @@
+---
+title: "HW01"
+author: "Max Moro"
+date: "August 27, 2018"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. (20 points) Basic Math – each question has 5% credits
+
+a. The log of a positive number.
+
+
+```{r}
+log(10)
+```
+
+b. What is the default base for the log function? Calculate the log of your previous number with a different base.
+
+**The log function has a natural base (e)**
+
+```{r}
+log10(10)
+```
+
+
+**log10 has base 10**
+
+c. The log of a negative number. (explain the answer)
+
+```{r}
+log(-10)
+```
+
+**log of a negative number is undefined, so R returns NaN (undefined, or 'Not a Number')**
+
+d. The square-root of a positive number.
+
+```{r}
+sqrt(1701)
+```
+
+
+2. (15 points) Random number generation.
+
+a. Create a vector of 15 standard normal random variables. Calculate its mean and SD (Standard Deviation).
+
+```{r echo=TRUE}
+v =  rnorm(n=15)
+message('Mean: ',mean(v))
+message('SD: ',sd(v))
+```
+
+b. Change the mean to 10 and the SD to 2 and recalculate the vector of 15 random
+normal variables. Calculate its mean and SD.
+
+```{r}
+v=rnorm(n=15,mean=10, sd=2)
+message('Mean: ',mean(v))
+message('SD: ',sd(v))
+```
+
+c. Why are the means and SD not exactly the same as the means and SDs specified in the function?
+
+**Because the _rnorm_ function creates random values from a distribution with the specified SD and Mean. If the number of observations (n) is small, the result will not converge to the specified SD and mean, a larger n will get closer to the specified values.**
+
+3. (40 points) Vector Operations
+
+a. The weights of 6 individuals in kg are 60, 72, 57, 90, 95, 72.
+
+```{r}
+w = c(60, 72, 57, 90, 95, 72)
+print(w)
+```
+
+b. Their heights (in m) are 1.80, 1.85, 1.72, 1.90, 1.74, 1.91.
+
+```{r}
+h=c(1.80, 1.85, 1.72, 1.90, 1.74, 1.91)
+print(h)
+```
+
+
+c. Enter these vectors into R.
+
+**see above**
+
+d. Create a scatterplot of weight vs. height. Interpret the scatterplot.
+
+```{r}
+plot(x=h,y=w,xlab='Height (my)',ylab='Weight (kg)')
+```
+
+**From the plot we can see that, generally, as the the Height increases, the Weight increases. We have somes outlier on this correlation.**
+
+e. Calculate the BMI for each individual. (BMI = weight in kg divided by the square of the height in m)
+
+```{r}
+BMI = w/(h^2)
+message('BMI:') 
+print(BMI)
+```
+
+f. Calculate the mean for weight.
+
+```{r}
+message('Mean of weight: ',mean(w))
+```
+
+g. Subtract the mean from each value of weight
+
+```{r}
+weightDiff = w-(mean(w))
+print(weightDiff)
+```
+
+h. Sum the result. Now you know why we square the deviations from the mean to calculate a standard deviation!
+
+```{r}
+sum(weightDiff)
+```
+
+**Yep.. it is Zero, we ened to square to calculate the SD***
+
+4. (25 points) Your data science profile. Enter your data science profile into R as a data frame with two columns. Call it by your first name. The categories are computer programming, math, statistics, machine learning, domain expertise, communication and presentation skills, and data visualization. Your ranking for each category 1-5, with 5 as best. Create a bar graph of your data science profile. When you submit your work, please submityour code, including the data entry piece.
+
+
+```{r}
+MaxMoro=data.frame(category=c('Computer Programming','Math','Statistics','Machine Learning'
+                              ,'Domain Expertise','Communication and Presentation Skills'
+                              ,'Data Visualization')
+                   ,ranking = c(5,3,3,4,5,3,5)
+                   )
+message('The Data Science profile of Max Moro:')
+MaxMoro
+barplot(MaxMoro$ranking,names= MaxMoro$category,las=2,cex.names = .5,mar=c(5,3,3,3))
+
+par(mar=c(5,15,1,0))
+barplot(height=MaxMoro$ranking,names=MaxMoro$category,horiz=T,las=2,cex.names=.8)
+```
+
