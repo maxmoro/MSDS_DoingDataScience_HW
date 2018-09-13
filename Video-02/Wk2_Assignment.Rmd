@@ -1,0 +1,43 @@
+---
+title: "Wk2.Assignment7"
+author: "Max Moro"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+data(stackloss)
+```
+
+## Week 2 Lecture Assignment
+
+**Objective:**
+
+- Use the stackloss data to create the following:
+    - Use summary() function on data set and interpret the results.
+    - Use the “str” function on the data set and interpret the results.
+    - Create a scatter plot of stack.loss vs. Air.Flow and describe the relationship.
+
+## Summary
+
+```{r task1}
+summary(stackloss)
+```
+
+The function summary shows that We have 4 columns, Air.Flow, Water.Temp, Acid.conc, and stack.loss. The functions shows then important statistics for each column, including Min, the three quartiles, and the max value. 
+
+## Str
+
+```{r task2}
+str(stackloss)
+```
+
+the Str function shows  data structure of the stackloss data-frame. We have four columns, and they are all numeric. The data-frame contains 21 observations (rows)
+
+## Scatter Plot
+
+```{r task3}
+plot(x=stackloss$stack.loss, y=stackloss$Air.Flow)
+```
+
+The Scatter Plot of the stackloss data shows a mostly linear and positive correlation between Stack Loss  and Air Flow variables. 
