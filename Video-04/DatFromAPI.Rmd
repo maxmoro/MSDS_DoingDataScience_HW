@@ -1,0 +1,114 @@
+---
+title: "Data From API"
+author: "Max"
+date: "September 12, 2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+### Objective
+
+**Using API calls to gather data**
+
+In this example I'm using QUANDL package (www.quandl.com) to gather following economic data
+
+- GDP
+
+- Unemployment
+
+- NASDAQ
+
+Then I will merge then in a single dataset and remove any rows that has at least one NA value
+
+```{r setup, include=F}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages('Quandl')
+library(Quandl)
+library(data.table)
+library(httr)
+library(zoo)
+```
+
+
+### Setup Connection
+
+```{r}
+startDate=as.Date('2018/01/01')
+allDates = data.table(Date=seq(from=startDate,to=Sys.Date(),by=1))
+
+#setting up QUANDL to download load economic indicato
+#https://www.quandl.com/searchr
+Quandl.api_key('9d_xURs_x6eAjTwbszrb') #Max's API key
+
+#set_config(use_proxy(url="http://proxy.micron.com",port=8080))  # setup proxy
+httr::set_config( config( ssl_verifypeer = 0L ) ) #fixes issue with CURL and Micron Proxy
+```
+
+
+### Getting GDP Data
+
+```{r GDP}
+### GDP Data ###
+# Get GDP Data from Quandl
+GDP = data.table(Quandl("FRED/GDP",start_date = startDate))
+# Select Columns
+GDP=GDP[,.(Date,GDP = Value)][order(Date)]
+# create all missing Dates
+GDP=merge(GDP,allDates,by='Date',all.y=T)[order(Date)]
+# fill missing values
+GDP[,GDP  := na.locf(GDP ,na.rm=F,fromLast=F,rule=1)] #rule=2 grabs the closest backwards or forward
+head(GDP)
+```
+
+### Getting Unemployment Data
+
+
+```{r Unemp}
+### Unemployment ###
+# get data
+Unemp = data.table(Quandl("FRED/UNRATE",start_date = startDate))
+# select columns
+Unemp=Unemp[,.(Date,Unemp = Value)]
+# create all missing dates
+Unemp=merge(Unemp,allDates,by='Date',all.y=T)[order(Date)]
+# fill missing values
+Unemp[,Unemp  := na.locf(Unemp ,na.rm=F,fromLast=F,rule=1)] #rule=2 grabs the closest backwards or forward
+head(Unemp)
+```
+
+
+### Getting NASDAQ Data
+
+```{r NASDAQ}
+### Unemployment ###
+# get data
+NASDAQ = data.table(Quandl("NASDAQOMX/NDX",start_date = startDate))
+# select columns
+NASDAQ=NASDAQ[,.(Date = `Trade Date`,NASDAQ = `Index Value`)]
+# create all missing dates
+NASDAQ=merge(NASDAQ,allDates,by='Date',all.y=T)[order(Date)]
+# fill missing values
+NASDAQ[,NASDAQ  := na.locf(NASDAQ ,na.rm=F,fromLast=F,rule=1)] #rule=2 grabs the closest backwards or forward
+head(NASDAQ)
+```
+
+
+### Merge and Clean
+
+
+```{r merge}
+dataset = merge(allDates,GDP,by='Date',all.x=T)
+dataset = merge(dataset,Unemp,by='Date',all.x=T)
+dataset = merge(dataset,NASDAQ,by='Date',all.x=T)
+head(dataset)
+```
+
+```{r clean}
+# keep records don't have NAs
+keep= complete.cases(dataset)
+dataset=dataset[keep,]
+head(dataset)
+```
+
