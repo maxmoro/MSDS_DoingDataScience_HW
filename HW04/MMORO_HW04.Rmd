@@ -9,7 +9,9 @@ output:
     toc_float: true
 ---
 
-```{r setup, include=FALSE}
+**Setup Libraries **
+
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 library(rvest)
 library(ggplot2)
@@ -38,11 +40,19 @@ good idea of what the page looks like in code.
 
 Scrape the page with any R package that makes things easy for you. Of particular interest is the table of the Cast in order of crediting. Please scrape this table (you might have to fish it out of several of the tables from the page) and make it a data.frame() of the Cast in your R environment
 
-- Userd **rvest** package, see code at 1c
+- Used **rvest** package, see code at 1c
 
 ## 1c.
 
 Clean Up the Table
+
+• It should not have blank observations or rows, a row that should be column names, or just ‘…’
+
+• It should have intuitive column names (ideally 2 to start – Actor and Character)
+
+• In the film, Mr. Warwick plays two characters, which makes his row look a little weird. Please replace his character column with just “Griphook / Professor Filius Flitwick” to make it look better.
+
+• One row might result in “Rest of cast listed alphabetically” – remove this observation.
 
 - This is the **full code** from 1a to 1c.
 
@@ -93,6 +103,11 @@ and Character columns.
 
 head(dataHP,10)
 ```
+
+```{r}
+DT::datatable(dataHP)
+```
+
 
 *data from [IMDB](https://www.imdb.com/title/tt1201607/fullcredits)*
 
