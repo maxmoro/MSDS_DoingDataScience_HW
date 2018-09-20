@@ -1,0 +1,18 @@
+---
+title: "API_Live_session"
+author: "Max Moro"
+date: "September 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+url='http://api.dataatwork.org/v1/jobs/af2e31c2c64ae223b06eb7f0cbf59a98/related_skills'
+
+library(httr)
+r = GET(')
+```
+

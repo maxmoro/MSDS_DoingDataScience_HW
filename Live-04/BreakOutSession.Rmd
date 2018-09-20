@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+author: "Max Moro"
+date: "September 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+file = 'http://archive.ics.uci.edu/ml/machine-learning-databases/annealing/anneal.data'
+data=read.csv(file)
+col=data[,35]
+summary(col)
+table(com)
+names(data)[35]
+
+sum(data[,35])
+
+#or
+sum(read.csv('http://archive.ics.uci.edu/ml/machine-learning-databases/annealing/anneal.data')[,35])
+
+
+```
+

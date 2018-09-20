@@ -1,0 +1,189 @@
+---
+title: "HW4"
+author: "Max Moro"
+date: "September 19, 2018"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(ggplot2)
+library(scales)
+library(tidyverse)
+library(ggthemes)
+#https://blog.rstudio.com/2014/11/24/rvest-easy-web-scraping-with-r/
+```
+
+# Question 1 - Harry Potter
+
+**Harry Potter Cast (50%)**
+
+## 1a.
+
+In the IMDB, there are listings of full cast members for movies. Navigate to http://www.imdb.com/title/tt1201607/fullcredits?ref_=tt_ql_1. Feel free to View Source to get a
+good idea of what the page looks like in code.
+
+
+- Used **SelectorGadget** to analyze the page
+
+- Found that I need the node **.even td , .odd td**
+
+
+## 1b.
+
+Scrape the page with any R package that makes things easy for you. Of particular interest is the table of the Cast in order of crediting. Please scrape this table (you might have to fish it out of several of the tables from the page) and make it a data.frame() of the Cast in your R environment
+
+- Userd **rvest** package, see code at 1c
+
+## 1c.
+
+Clean Up the Table
+
+- This is the **full code** from 1a to 1c.
+
+```{r}
+HP = read_html('https://www.imdb.com/title/tt1201607/fullcredits')
+
+dataHP= HP %>% 
+  #getting the HTML note 
+  html_nodes('.even td , .odd td')    %>% 
+  #converting to text
+  html_text(T)  %>%
+  #creating a matrix and dataframe
+  matrix(ncol=4,byrow=T) %>%
+  data.frame(stringsAsFactors = F) %>%
+  #keepping only the actor and character col
+  dplyr::select(X2,X4) %>%
+  #Renaming
+  rename(Actor=X2,Character=X4) %>%
+  #remove all \n
+  mutate(Character = gsub("\n"," ",Character,fixed=T))
+
+
+head(dataHP)
+
+#Mr. Warwick is alrady clean in the source HTML (I think the page has been change#)
+message("Duplicated Actors (multiple roles): ",sum(duplicated(dataHP$Actor)))
+
+message("Any Row with 'Rest of cast'?: ",sum(grepl('^Rest of cast',dataHP$Actor)))
+```
+
+## 1d.
+
+Split the Actor’s name into two columns: FirstName and Surname. Keep in mind that some actors/actresses have middle names as well. Please make sure that the middle names are in the FirstName column, in addition to the first name (example: given the Actor Frank Jeffrey Stevenson, the FirstName column would say “Frank Jeffrey.”)
+
+```{r}
+dataHP = dataHP %>% 
+  separate(Actor,c('FirstName','Surname'),sep=' (?=[^ ]+$)',keep=TRUE)
+
+head(dataHP)
+```
+
+## 1e.
+
+Present the first 10 rows of the data.frame() – It should have only FirstName, Surname,
+and Character columns.
+
+```{r}
+
+head(dataHP,10)
+```
+
+*data from [IMDB](https://www.imdb.com/title/tt1201607/fullcredits)*
+
+# Question 2- SportsBall
+
+**SportsBall (50%)**
+
+## 2a.
+
+a. On the ESPN website, there are statistics of each NBA player. Navigate to the San Antonio Spurs current statistics (likely http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs).
+You are interested in the Shooting Statistics table.
+
+- Using **html_table** function in **rvest** library to gather the second table (shooting statistics)
+
+
+## 2b.
+
+Scrape the page with any R package that makes things easy for you. There are a few tables on the page, so make sure you are targeting specifically the Shooting Statistics table.
+
+```{r}
+#reading the HTML
+SB = read_html('http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs')
+#getting the second table
+SBShooting = html_table(SB,fill=T,header=T)[[2]]
+#convert to dataframe (first rows has the col names)
+SBtable = data.frame(SBShooting[-1,])
+#set col names
+names(SBtable)= SBShooting[1,]
+head(SBtable)
+```
+
+##2c.
+
+Clean up the table (You might get some warnings if you’re working with tibbles)
+
+- You’ll want to create an R data.frame() with one observation for each player. Make sure that you do not accidentally include blank rows, a row of column names, or the Totals row in the table as observations.
+```{r}
+
+SBtable = SBtable %>%
+  #removing Totals
+  filter(PLAYER != 'Totals') %>%
+  #convert to numeric
+  mutate_at(names(SBtable)[-1],as.numeric)
+
+head(SBtable)
+tail(SBtable)
+```
+
+- The column PLAYER has two variables of interest in it: the player’s name and their position, denoted by 1-2 letters after their name. Split the cells into two columns, one with Name and the other Position. 
+
+```{r}
+SBtable = SBtable %>%
+  separate(PLAYER,c('Name','Position'),sep=', ')
+
+DT::datatable(SBtable)
+```
+- Check the data type of all columns. Convert relevant columns to numeric. Check the data type of all columns again to confirm that they have changed!
+
+- **done in step 2c**
+
+```{r}
+str(SBtable)
+```
+
+
+## 2d.
+
+Create a colorful bar chart that shows the Field Goals Percentage Per Game for each person. It will be graded on the following criteria
+
+• Informative Title, centered
+
+• Relevant x and y axis labels (not simply variables names!)
+
+• Human-readable axes with no overlap (you might have to flip x and y to fix that). Note: You do not have to convert the decimal to a percentage.
+
+• Color the columns by the team member’s position (so, all PF’s should have the same color, etc.)
+
+```{r}
+
+SBtable$Name = forcats::fct_reorder(SBtable$Name,SBtable$`FG%`)
+ggplot(data=SBtable
+       ,aes(x=Name,y=`FG%`,fill=Position)) +
+       #,aes(x=reorder(Name,`FG%`),y=`FG%`,fill=Position)) + # also works without the forcats
+  geom_col() + 
+  coord_flip() +
+  ggplot2::ggtitle('Field goal percentage per game by player',subtitle='Team: San Antonio Spurs') +
+  ggthemes::theme_gdocs() + 
+  ggplot2::scale_y_continuous(labels=percent,name='Field Goal Percentage Per Game') +
+  xlab('Player') + 
+  ggplot2::theme(title=element_text(size=10,hjust=))
+  
+```
+
+*data from [ESPN](http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs)*
