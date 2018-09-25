@@ -93,13 +93,14 @@ Raw format of the yob2015.txt files.
 
 ## finalGirls 
 
-A filtered view of **final* dataset, showing only records with gender = Female
+A filtered view of **final** dataset, showing only records with gender = Female
 
 # Output
 
-## Top10GirlsNAmes
+## Top10GirlsNAmes.csv
 
-CSV file, wiht the top 10 most common names for Girls for 2015 and 2016. Two columns
+A .CSV file with the top 10 most common names for girls for 2015 and 2016. The file contains two columns:
 
-**name** the name of the person (Character)
-**Total** count of people with such name (numeric)
+**name** = the female name of the person (Character)
+
+**Total** = count of people with such name (numeric)
