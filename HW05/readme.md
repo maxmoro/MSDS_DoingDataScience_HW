@@ -122,3 +122,17 @@ A .CSV file with the top 10 most common names for girls for 2015 and
 **name** = the female name of the person (Character)
 
 **Total** = count of people with such name (numeric)
+
+Other Files
+===========
+
+MMORO-HW05.Rmd
+--------------
+
+A Markdown file with the code to transorm the raw data in tidy data, and
+print out summaries, as indicated above.
+
+MMORO-HW05.HTML
+---------------
+
+The HTML-version of the Markdown file.
