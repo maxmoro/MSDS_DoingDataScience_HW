@@ -113,7 +113,7 @@ Female
 Output
 ======
 
-Top10GirlsNAmes.csv
+Top10GirlsNames.csv
 -------------------
 
 A .CSV file with the top 10 most common names for girls for 2015 and
