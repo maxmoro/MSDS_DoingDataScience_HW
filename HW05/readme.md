@@ -38,9 +38,14 @@ Raw format of the yob2016.txt files.
 **name** = person’s name **gender** = person’s gender **count** = count
 of people with botn in 2016 having the selected **name**
 
-‘data.frame’: 32869 obs. of 3 variables: $ name : chr “Emma” “Olivia”
-“Ava” “Sophia” … $ gender: chr “F” “F” “F” “F” … $ count : int 19414
-19246 16237 16070 14722 14366 13030 11699 10926 10733 …
+‘data.frame’: 32869 obs. of 3 variables:
+
+$ name : chr “Emma” “Olivia” “Ava” “Sophia” …
+
+$ gender: chr “F” “F” “F” “F” …
+
+$ count : int 19414 19246 16237 16070 14722 14366 13030 11699 10926
+10733 …
 
 y2016
 -----
@@ -48,9 +53,14 @@ y2016
 Cleaned version of the yob2015.txt file, where misspelled names have
 been removed
 
-‘data.frame’: 32868 obs. of 3 variables: $ name : chr “Emma” “Olivia”
-“Ava” “Sophia” … $ gender: chr “F” “F” “F” “F” … $ count : int 19414
-19246 16237 16070 14722 14366 13030 11699 10926 10733 …
+‘data.frame’: 32868 obs. of 3 variables:
+
+$ name : chr “Emma” “Olivia” “Ava” “Sophia” …
+
+$ gender: chr “F” “F” “F” “F” …
+
+$ count : int 19414 19246 16237 16070 14722 14366 13030 11699 10926
+10733 …
 
 y2015
 -----
