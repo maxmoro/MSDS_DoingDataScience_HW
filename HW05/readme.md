@@ -1,5 +1,5 @@
-Readme
-======
+Codebook
+========
 
 This folder contain the output for the Homework 5, made by Max Moro for
 the Doing Data Science class for the Master in Data Science program at

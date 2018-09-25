@@ -1488,7 +1488,7 @@ div.tocify {
 <div id="a." class="section level2">
 <h2>1a.</h2>
 <ol style="list-style-type: lower-alpha">
-<li>First, import the .txt file into R so you can process it. Keep in mind this is not a CSV file. You might have to open the file to see what you’re dealing with. Assign the resulting data frame to an object, df, that consists of three columns with humanreadable column names for each.</li>
+<li>First, import the .txt file into R so you can process it. Keep in mind this is not a CSV file. You might have to open the file to see what you’re dealing with. Assign the resulting data frame to an object, df, that consists of three columns with human readable column names for each.</li>
 </ol>
 <pre class="r"><code>df = read.table('yob2016.txt',header=F,sep=&quot;;&quot;,quote=&quot;&quot;,stringsAsFactors = F) %&gt;%
   rename(name=V1,gender=V2,count=V3)
@@ -1546,7 +1546,7 @@ nrow(y2016)</code></pre>
 <div id="a.-1" class="section level2">
 <h2>2a.</h2>
 <ol style="list-style-type: lower-alpha">
-<li>Like 1a, please import the .txt file into R. Look at the file before you do. You might have to change some options to import it properly. Again, please give the dataframe human-readable column names. Assign the dataframe to y2015.</li>
+<li>Like 1a, please import the .txt file into R. Look at the file before you do. You might have to change some options to import it properly. Again, please give the data frame human-readable column names. Assign the data frame to y2015.</li>
 </ol>
 <pre class="r"><code>y2015 = read.table('yob2015.txt',header=F,sep=&quot;,&quot;,quote=&quot;&quot;,stringsAsFactors = F) %&gt;%
   rename(name=V1,gender=V2,count=V3)
@@ -1562,7 +1562,7 @@ head(y2015)</code></pre>
 <div id="b.-1" class="section level2">
 <h2>2b.</h2>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Display the last ten rows in the dataframe. Describe something you find interesting about these 10 rows.</li>
+<li>Display the last ten rows in the data frame. Describe something you find interesting about these 10 rows.</li>
 </ol>
 <pre class="r"><code>tail(y2015,10)</code></pre>
 <pre><code>##         name gender count
@@ -1576,7 +1576,7 @@ head(y2015)</code></pre>
 ## 33061  Zykir      M     5
 ## 33062  Zyrus      M     5
 ## 33063   Zyus      M     5</code></pre>
-<p>The last 10 rows are all Males, noone has a name alphabetically after Zyus, all of the last 10 have a count of childred of 5.</p>
+<p>The last 10 rows are all Males, no one has a name alphabetically after Zyus, all of the last 10 have a count of childred of 5.</p>
 </div>
 <div id="c.-1" class="section level2">
 <h2>2c.</h2>
@@ -1640,8 +1640,17 @@ message('Top 10 most popular names for girls:\n',paste0(finalGirls$name[1:10],co
 <pre class="r"><code>write.csv(finalGirls[1:10,c('name','Total')],'Top10GirlsNames.csv',row.names = F)
 file.info('Top10GirlsNames.csv')[,c(1,4,5)]</code></pre>
 <pre><code>##                     size               mtime               ctime
-## Top10GirlsNames.csv  173 2018-09-25 15:04:55 2018-09-25 13:34:41</code></pre>
+## Top10GirlsNames.csv  173 2018-09-25 15:13:05 2018-09-25 13:34:41</code></pre>
 </div>
+</div>
+<div id="question-4---upload-to-github" class="section level1">
+<h1>Question 4 - Upload to GitHub</h1>
+<p>Upload to GitHub (10 points): Push at minimum your RMarkdown for this homework assignment and a Codebook to one of your GitHub repositories (you might place this in a Homework repo like last week). The Codebook should contain a short definition of each object you create, and if creating multiple files, which file it is contained in. You are welcome and encouraged to add other files—just make sure you have a description and directions that are helpful for the grader.</p>
+<ul>
+<li><p>Link to the GitHub main repository: <a href="https://github.com/maxmoro/MSDS_DoingDataScience_HW" class="uri">https://github.com/maxmoro/MSDS_DoingDataScience_HW</a></p></li>
+<li><p>This homework Folder: <a href="https://github.com/maxmoro/MSDS_DoingDataScience_HW/tree/master/HW05" class="uri">https://github.com/maxmoro/MSDS_DoingDataScience_HW/tree/master/HW05</a></p></li>
+<li><p>The codebook is saved as readme and displayed in the homework 5 folder</p></li>
+</ul>
 </div>
 
 
