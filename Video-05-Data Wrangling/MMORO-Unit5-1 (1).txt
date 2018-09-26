@@ -1,0 +1,9 @@
+url='https://raw.githubusercontent.com/maxmoro/MSDS_DoingDataScience_HW/master/HW03/college_recent_grads.csv'
+file=tempfile()
+download.file(url,file)
+message('Data of file Download: ',file.info(file)$mtime)
+data=read.csv(file)
+
+message('Variable names:\n ',paste0(names(data),collapse='\n'))
+message('Variable Types: ',str(data))
+

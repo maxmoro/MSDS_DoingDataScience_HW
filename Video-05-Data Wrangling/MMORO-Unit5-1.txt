@@ -1,0 +1,4 @@
+proc SQL;                                                                                                                                                                                                                    
+update diff                                                                                                                                                                                                              
+ set new= old - 0.5 
+run;  

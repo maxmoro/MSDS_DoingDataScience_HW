@@ -1,0 +1,52 @@
+---
+title: "Video05-Tidy Data"
+author: "Max Moro"
+date: "September 23, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r Unit5-1}
+url='https://raw.githubusercontent.com/maxmoro/MSDS_DoingDataScience_HW/master/HW03/college_recent_grads.csv'
+file=tempfile()
+download.file(url,file)
+message('Data of file Download: ',file.info(file)$mtime)
+message('Dimensions of file : ',file.info(file)$size,' bytes')
+data=read.csv(file)
+
+message('Variable names:\n ',paste0(names(data),collapse='\n'))
+message('Variable Types: ',str(data))
+```
+
+
+```{r Unit5-1}
+# Do the 10 most stable countries grow more apples or more oranges (in total volume)?
+# What is the average amount of railroad in countries that grow more apples than oranges, and vice versa?
+
+#install.packages('downloader')
+library(downloader)
+download('https://raw.githubusercontent.com/thoughtfulbloke/faoexample/master/appleorange.csv',destfile='appleorange.csv')
+list.files()
+
+aoraw=read.csv('appleorange.csv',stringsAsFactors = F,header=F)
+aodata=aoraw[3:700,]
+names(aodata) = c('country','countrynumber','products','productnubmer','tonnes','year')
+aodata$countrynubmer = as.integer(aodata$countrynumber)
+fslines = which(aodata$country=='Food supply quantity (tonnes) (tonnes)')
+aodata = aodata[-fslines,]
+str(aodata)
+aodata$tonnes = gsub("\xca","",aodata$tonnes)
+aodata$tonnes = gsub(", tonnes \\(\\)","",aodata$tonnes)
+aodata$tonnes = as.numeric(aodata$tonnes)
+str(aodata)
+aodata$year = 2009
+apples = aodata[aodata$productnubmer==2617,c(1,2,5)]
+names(apples)[3] = 'apples'
+oranges = aodata[aodata$productnubmer==2611,c(1,2,5)]
+names(oranges)[3] = 'oranges'
+sort(unique(oranges$country))
+```

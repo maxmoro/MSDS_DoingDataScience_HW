@@ -61,7 +61,7 @@ HP = read_html('https://www.imdb.com/title/tt1201607/fullcredits')
 
 dataHP= HP %>% 
   #getting the HTML note 
-  html_nodes('.even td , .odd td')    %>% 
+  html_nodes('.even td , .odd td')    %>%  #.cast_list td
   #converting to text
   html_text(T)  %>%
   #creating a matrix and dataframe
