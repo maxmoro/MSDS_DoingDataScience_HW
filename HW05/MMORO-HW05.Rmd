@@ -113,7 +113,7 @@ final = final %>%
   mutate(Total = count2015 + count2016) %>%
   arrange(desc(Total))
 
-message('Total number of People in the list: ',comma(sum(final$Total)))
+message('Total number of People in the list  of populare names: ',comma(sum(final$Total)))
         
 message('People with Top 10 most popular names: '
         ,comma(sum(final$Total[1:10]))
