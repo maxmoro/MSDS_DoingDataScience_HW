@@ -1,0 +1,35 @@
+---
+title: "Video06-ExploratoryDataAnalysis"
+author: "Max Moro"
+date: "September 29, 2018"
+output: html_document
+---
+
+https://rpubs.com/tmcfl/simulated-click-analysis
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(data.table)
+```
+
+```{r cars}
+datafile='dataNY.rds'
+if(!file.exists(datafile)){
+  #download files (faster)
+  files = paste0("http://stat.columbia.edu/~rachel/datasets/nyt",1:31,".csv")
+  if (F)  lapply(files,function(x){download.file(x,destfile=basename(x))})
+  
+  #read files
+  files = paste0("nyt",1:31,".csv")
+  df=do.call(lapply(files,read.csv))
+  saveRDS(df,datafile)
+}
+df=readRDS(datafile)
+
+df$ageGroup  <- cut(df$Age, c(-Inf, 18, 24, 34, 44, 54, 64, Inf)
+                    ,labels=c('<18','18-24','25-34','35-44','45-54','55-64','65+'))
+
+table(df$ageGroup)
+```
+
