@@ -36,5 +36,13 @@ df$ageGroup  <- cut(df$Age, c(-Inf, 18, 24, 34, 44, 54, 64, Inf)
                     ,labels=c('<18','18-24','25-34','35-44','45-54','55-64','65+'))
 
 table(df$ageGroup)
+
+df$Gender = factor(df$Gender,levels=c(1,0),labels=c('male','female'))
+
+table(df$ageGroup,df$Signed_In)
+library(ggplot)
+ggplot(data=na.omit(df),aes(x=ageGroup,y=Impresions,fill=ageGroup))
+
+
 ```
 
