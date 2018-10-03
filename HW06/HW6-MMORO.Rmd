@@ -1,5 +1,5 @@
 ---
-title: "HW05"
+title: "HW06"
 author: "Max Moro"
 date: "September 25, 2018"
 output:
@@ -8,8 +8,6 @@ output:
     toc_depth: 2
     toc_float: true
 ---
-
-**Setup Libraries **
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -27,8 +25,6 @@ library(ggthemes)
 **Disclaimer:** While these are real data, the assignment is not an endorsement for any particular position on medical affairs or building hospitals. It is for instructional use only.
 
 # Question 1 
-
-**Mental Health Clinics (40%)**
 
 
 ## 1a.
